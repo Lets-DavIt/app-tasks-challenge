@@ -6,6 +6,7 @@ import 'package:app_tasks_challenge/domain/entities/user_entity.dart';
 import 'package:app_tasks_challenge/domain/validators/credentials_validators.dart';
 import 'package:app_tasks_challenge/service/auth/auth_client_http.dart';
 import 'package:app_tasks_challenge/service/auth/auth_local_storage.dart';
+import 'package:app_tasks_challenge/utils/validation/lucid_validation_extension.dart';
 import 'package:result_dart/result_dart.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
