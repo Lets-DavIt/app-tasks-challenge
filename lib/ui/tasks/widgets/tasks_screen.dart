@@ -1,4 +1,5 @@
 import 'package:app_tasks_challenge/ui/tasks/viewmodels/tasks_viewmodel.dart';
+import 'package:app_tasks_challenge/ui/tasks/widgets/add_task_widget.dart';
 import 'package:app_tasks_challenge/ui/tasks/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,17 @@ class TasksScreen extends StatelessWidget {
             return TasksList(data: viewModel.tasks);
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AddTaskWidget();
+            },
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
