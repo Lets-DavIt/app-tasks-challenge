@@ -5,7 +5,7 @@ import 'package:result_dart/result_dart.dart';
 typedef CommandAction0<Output extends Object> = Future<Result<Output>>
     Function();
 
-//Command 1 não possui parametros de entrada
+//Command 1 possui parametros de entrada
 typedef CommandAction1<Output extends Object, Input extends Object>
     = Future<Result<Output>> Function(Input);
 

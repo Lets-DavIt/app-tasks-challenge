@@ -35,12 +35,16 @@ class TasksViewModel extends ChangeNotifier {
   Future<Result<Task>> _addTask(Task params) async {
     final lastTaskIndex = _tasks.length;
 
+    await Future.delayed(const Duration(seconds: 1));
+
     final createTask = Task(
-        id: lastTaskIndex,
+        id: lastTaskIndex + 1,
         title: params.title,
         description: params.description);
 
     _tasks.add(createTask);
+
+    notifyListeners();
 
     return Success(createTask);
   }

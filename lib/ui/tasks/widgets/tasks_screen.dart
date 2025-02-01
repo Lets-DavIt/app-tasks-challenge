@@ -39,7 +39,9 @@ class TasksScreen extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) {
-              return AddTaskWidget();
+              return AddTaskWidget(
+                viewModel: viewModel,
+              );
             },
           );
         },
