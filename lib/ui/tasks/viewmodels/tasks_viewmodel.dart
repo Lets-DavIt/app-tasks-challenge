@@ -51,7 +51,11 @@ class TasksViewModel extends ChangeNotifier {
 
   Future<Result<String>> _deleteTask(Task task) async {
     await Future.delayed(const Duration(seconds: 1));
+
     _tasks.remove(task);
+
+    notifyListeners();
+
     return const Success("Removido com sucesso!");
   }
 }

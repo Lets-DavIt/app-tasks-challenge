@@ -3,23 +3,74 @@ import 'package:app_tasks_challenge/ui/tasks/widgets/add_task_widget.dart';
 import 'package:app_tasks_challenge/ui/tasks/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   final TasksViewModel viewModel;
   const TasksScreen({super.key, required this.viewModel});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  @override
+  void initState() {
+    widget.viewModel.deleteTask.addListener(_onResult);
+    super.initState();
+  }
+
+  void _onResult() {
+    if (widget.viewModel.deleteTask.running) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return const IntrinsicHeight(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      );
+    } else {
+      Navigator.of(context).pop;
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      if (widget.viewModel.deleteTask.completed) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.green,
+            content: Text('Tarefa removida com sucesso!'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Ocorreu um erro ao remover a tarefa.'),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.viewModel.deleteTask.addListener(_onResult);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Taski')),
       body: ListenableBuilder(
-        listenable: viewModel.load,
+        listenable: widget.viewModel.load,
         builder: (context, child) {
-          if (viewModel.load.running) {
+          if (widget.viewModel.load.running) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (viewModel.load.error) {
+          if (widget.viewModel.load.error) {
             return const Center(
               child: Text('Error'),
             );
@@ -28,9 +79,15 @@ class TasksScreen extends StatelessWidget {
           return child!;
         },
         child: ListenableBuilder(
-          listenable: viewModel,
+          listenable: widget.viewModel,
           builder: (context, child) {
-            return TasksList(data: viewModel.tasks);
+            return TasksList(
+              onRemoveTask: (task) {
+                debugPrint('Remove task: ${task}');
+                widget.viewModel.deleteTask.execute(task);
+              },
+              data: widget.viewModel.tasks,
+            );
           },
         ),
       ),
@@ -40,7 +97,7 @@ class TasksScreen extends StatelessWidget {
             context: context,
             builder: (context) {
               return AddTaskWidget(
-                viewModel: viewModel,
+                viewModel: widget.viewModel,
               );
             },
           );

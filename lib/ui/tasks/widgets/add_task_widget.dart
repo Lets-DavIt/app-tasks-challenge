@@ -44,8 +44,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       );
     } else {
       if (widget.viewModel.addTask.completed) {
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.of(context).pop;
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.green,
@@ -53,16 +53,16 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
           ),
         );
       }
-      if (widget.viewModel.addTask.completed) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('Ocorreu um erro ao adicionar a tarefa.'),
-          ),
-        );
-      }
+      // if (widget.viewModel.addTask.completed) {
+      //   Navigator.of(context).pop;
+      //   Navigator.of(context).pop();
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(
+      //       backgroundColor: Colors.red,
+      //       content: Text('Ocorreu um erro ao adicionar a tarefa.'),
+      //     ),
+      //   );
+      // }
     }
   }
 
