@@ -83,7 +83,6 @@ class _TasksScreenState extends State<TasksScreen> {
           builder: (context, child) {
             return TasksList(
               onRemoveTask: (task) {
-                debugPrint('Remove task: ${task}');
                 widget.viewModel.deleteTask.execute(task);
               },
               data: widget.viewModel.tasks,
