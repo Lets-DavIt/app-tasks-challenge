@@ -19,11 +19,15 @@ class TasksRepositoryDev implements TasksRepository {
         title: task.title,
         description: task.description);
 
-    throw UnimplementedError();
+    return Future.value(Success<Task, Exception>(createdTask));
   }
 
   @override
   Future<Result<String>> delete(Task task) {
-    throw UnimplementedError();
+    if (_list.contains(task)) {
+      _list.remove(task);
+    }
+
+    return Future.value(const Success(''));
   }
 }
